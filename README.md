@@ -13,10 +13,27 @@ npm install github:zos-apps/clock
 ## Usage
 
 ```tsx
-import ZClock from '@zos-apps/clock';
+import App from '@zos-apps/clock';
 
-function App() {
-  return <ZClock />;
+function MyApp() {
+  return <App />;
+}
+```
+
+## Package Spec
+
+App metadata is defined in `package.json` under the `zos` field:
+
+```json
+{
+  "zos": {
+    "id": "ai.hanzo.clock",
+    "name": "Clock",
+    "icon": "🕐",
+    "category": "utilities",
+    "permissions": [],
+    "installable": true
+  }
 }
 ```
 

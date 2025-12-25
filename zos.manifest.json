@@ -1,0 +1,14 @@
+{
+  "id": "ai.hanzo.clock",
+  "name": "Clock",
+  "version": "4.2.0",
+  "description": "World clock with multiple timezones",
+  "icon": "🕐",
+  "category": "utilities",
+  "author": "Hanzo AI",
+  "repository": "https://github.com/zos-apps/clock",
+  "minSdkVersion": "4.0.0",
+  "permissions": [],
+  "main": "src/index.tsx",
+  "installable": true
+}

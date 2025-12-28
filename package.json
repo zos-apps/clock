@@ -18,7 +18,21 @@
         "height": 400
       },
       "resizable": false
-    }
+    },
+    "about": "World clock, alarm, stopwatch, and timer in one application.",
+    "help": [
+      "Add cities to world clock",
+      "Set alarms with + button",
+      "Use tabs to switch modes"
+    ],
+    "docs": "https://zos-apps.github.io/clock",
+    "site": "https://github.com/zos-apps/clock",
+    "features": [
+      "World clock",
+      "Multiple alarms",
+      "Stopwatch with laps",
+      "Countdown timer"
+    ]
   },
   "scripts": {
     "build": "tsup",
@@ -51,5 +65,13 @@
     "clock",
     "macos",
     "desktop"
-  ]
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/zos-apps"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

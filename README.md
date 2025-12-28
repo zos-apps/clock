@@ -1,54 +1,74 @@
-# 🕐 Clock
+# Clock
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/zos-apps/clock/releases)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-online-purple.svg)](https://zos-apps.github.io/clock)
+🕐 World clock, alarm, stopwatch, and timer in one application.
 
-> World clock, timer, and stopwatch
+[![CI](https://github.com/zos-apps/clock/actions/workflows/ci.yml/badge.svg)](https://github.com/zos-apps/clock/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@zos-apps/clock.svg)](https://www.npmjs.com/package/@zos-apps/clock)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**[Documentation](https://zos-apps.github.io/clock)** • **[App Store](https://zos-apps.github.io/app-store)** • **[All Apps](https://github.com/zos-apps)**
+## About
 
-## Installation
-
-```bash
-npm install github:zos-apps/clock
-```
-
-Or install via the [zOS App Store](https://zos-apps.github.io/app-store).
-
-## Usage
-
-```tsx
-import Clock from '@zos-apps/clock';
-
-function App() {
-  return <Clock />;
-}
-```
+World clock, alarm, stopwatch, and timer in one application.
 
 ## Features
 
-- Native zOS window integration
-- Dark mode support
+- World clock
+- Multiple alarms
+- Stopwatch with laps
+- Countdown timer
 
-- Context menu actions
-- Menu bar integration
+## Installation
 
-## Category
+### From App Store
+Open the **App Store** in zOS and search for "Clock".
 
-**Utilities**
+### Via npm
+```bash
+npm install @zos-apps/clock
+```
 
-## Permissions
+## Usage
 
-No special permissions required.
+- Add cities to world clock
+- Set alarms with + button
+- Use tabs to switch modes
 
-## Links
 
-- [Documentation](https://zos-apps.github.io/clock)
-- [GitHub Repository](https://github.com/zos-apps/clock)
-- [Report Issues](https://github.com/zos-apps/clock/issues)
-- [All zOS Apps](https://github.com/zos-apps)
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Documentation
+
+- [User Guide](https://zos-apps.github.io/clock)
+- [API Reference](https://zos-apps.github.io/clock/api)
+- [Changelog](https://github.com/zos-apps/clock/releases)
+
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](https://github.com/zos-apps/clock/blob/main/CONTRIBUTING.md) first.
 
 ## License
 
 MIT © [Hanzo AI](https://hanzo.ai)
+
+---
+
+<p align="center">
+  <a href="https://hanzo.ai">
+    <img src="https://hanzo.ai/logo.svg" alt="Hanzo AI" width="100">
+  </a>
+</p>
+<p align="center">
+  Built with ❤️ by <a href="https://hanzo.ai">Hanzo AI</a>
+</p>

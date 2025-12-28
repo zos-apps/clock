@@ -1,5 +1,5 @@
 {
-  "name": "@anthropic/clock",
+  "name": "@zos-apps/clock",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -13,7 +13,10 @@
     "description": "World clock, timer, and stopwatch",
     "permissions": [],
     "window": {
-      "defaultSize": { "width": 320, "height": 400 },
+      "defaultSize": {
+        "width": 320,
+        "height": 400
+      },
       "resizable": false
     }
   },
@@ -30,5 +33,23 @@
     "@types/react-dom": "^18.3.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
-  }
+  },
+  "description": "World clock, timer, and stopwatch",
+  "homepage": "https://zos-apps.github.io/clock",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zos-apps/clock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zos-apps/clock/issues"
+  },
+  "author": "Hanzo AI",
+  "license": "MIT",
+  "keywords": [
+    "zos",
+    "app",
+    "clock",
+    "macos",
+    "desktop"
+  ]
 }

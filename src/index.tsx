@@ -1,31 +1,37 @@
-import React, { useState, useEffect, useCallback } from 'react';
-
-interface ClockProps {
-  onClose: () => void;
-}
+import { useState, useEffect, useCallback } from 'react';
+import type { AppProps } from '@zos-apps/config';
+import { useTimer } from '@zos-apps/config';
 
 type Tab = 'clock' | 'stopwatch' | 'timer';
 
-const Clock: React.FC<ClockProps> = ({ onClose }) => {
+const Clock: React.FC<AppProps> = ({ onClose: _onClose }) => {
   const [tab, setTab] = useState<Tab>('clock');
   const [time, setTime] = useState(new Date());
 
-  // Stopwatch state
+  // Stopwatch state (manual, needs centisecond precision)
   const [stopwatchTime, setStopwatchTime] = useState(0);
   const [stopwatchRunning, setStopwatchRunning] = useState(false);
 
-  // Timer state
-  const [timerTime, setTimerTime] = useState(300); // 5 minutes default
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [timerInput, setTimerInput] = useState('5:00');
+  // Countdown timer using shared hook (seconds precision is fine)
+  const {
+    elapsed: countdownElapsed,
+    isRunning: timerRunning,
+    start: startTimer,
+    stop: stopTimer,
+    reset: resetTimerHook,
+  } = useTimer(false);
 
-  // Update clock
+  const [timerDuration, setTimerDuration] = useState(300); // 5 minutes default
+  const [timerInput, setTimerInput] = useState('5:00');
+  const timerTime = Math.max(0, timerDuration - countdownElapsed);
+
+  // Update clock every second
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Stopwatch logic
+  // Stopwatch logic (needs 10ms precision)
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (stopwatchRunning) {
@@ -36,18 +42,12 @@ const Clock: React.FC<ClockProps> = ({ onClose }) => {
     return () => clearInterval(interval);
   }, [stopwatchRunning]);
 
-  // Timer logic
+  // Stop timer when it reaches 0
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    if (timerRunning && timerTime > 0) {
-      interval = setInterval(() => {
-        setTimerTime(prev => prev - 1);
-      }, 1000);
-    } else if (timerTime === 0 && timerRunning) {
-      setTimerRunning(false);
+    if (timerTime === 0 && timerRunning) {
+      stopTimer();
     }
-    return () => clearInterval(interval);
-  }, [timerRunning, timerTime]);
+  }, [timerTime, timerRunning, stopTimer]);
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 60000);
@@ -70,17 +70,13 @@ const Clock: React.FC<ClockProps> = ({ onClose }) => {
     return parseInt(input) * 60;
   };
 
-  const resetStopwatch = useCallback(() => {
-    setStopwatchRunning(false);
-    setStopwatchTime(0);
-  }, []);
-
   const setTimerFromInput = useCallback(() => {
     const seconds = parseTimerInput(timerInput);
     if (!isNaN(seconds) && seconds > 0) {
-      setTimerTime(seconds);
+      setTimerDuration(seconds);
+      resetTimerHook();
     }
-  }, [timerInput]);
+  }, [timerInput, resetTimerHook]);
 
   return (
     <div className="h-full flex flex-col bg-black text-white">
@@ -130,7 +126,7 @@ const Clock: React.FC<ClockProps> = ({ onClose }) => {
                 {stopwatchRunning ? 'Stop' : 'Start'}
               </button>
               <button
-                onClick={resetStopwatch}
+                onClick={() => { setStopwatchRunning(false); setStopwatchTime(0); }}
                 className="px-8 py-3 rounded-full bg-white/10 hover:bg-white/20 font-medium transition-colors"
               >
                 Reset
@@ -141,7 +137,7 @@ const Clock: React.FC<ClockProps> = ({ onClose }) => {
 
         {tab === 'timer' && (
           <div className="text-center">
-            {!timerRunning && timerTime === 0 ? (
+            {!timerRunning && timerTime === timerDuration ? (
               <div className="mb-8">
                 <input
                   type="text"
@@ -161,10 +157,10 @@ const Clock: React.FC<ClockProps> = ({ onClose }) => {
             <div className="flex gap-4">
               <button
                 onClick={() => {
-                  if (!timerRunning && timerTime === 0) {
+                  if (!timerRunning && countdownElapsed === 0) {
                     setTimerFromInput();
                   }
-                  setTimerRunning(!timerRunning);
+                  timerRunning ? stopTimer() : startTimer();
                 }}
                 className={`px-8 py-3 rounded-full font-medium transition-colors
                   ${timerRunning ? 'bg-red-600 hover:bg-red-500' : 'bg-orange-600 hover:bg-orange-500'}
@@ -174,8 +170,8 @@ const Clock: React.FC<ClockProps> = ({ onClose }) => {
               </button>
               <button
                 onClick={() => {
-                  setTimerRunning(false);
-                  setTimerTime(parseTimerInput(timerInput));
+                  resetTimerHook();
+                  setTimerDuration(parseTimerInput(timerInput));
                 }}
                 className="px-8 py-3 rounded-full bg-white/10 hover:bg-white/20 font-medium transition-colors"
               >
